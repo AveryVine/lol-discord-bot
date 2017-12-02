@@ -13,7 +13,7 @@ import de.btobastian.javacord.listener.message.MessageCreateListener;
 public class LolDiscordBot {
 
     public static void main(String args[]) {
-    		String token = "";
+    		String token = "Mzg2NTQ4ODAyNDI2NzY1MzEz.DQRhMA.cO4kOi2x2cPrFMOaxebNp1MgzNg";
         // See "How to get the token" below
         DiscordAPI api = Javacord.getApi(token, true);
         // connect
