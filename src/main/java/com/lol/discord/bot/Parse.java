@@ -4,17 +4,17 @@ import org.json.*;
 
 public class Parse {
 
-	public int firstID;
-	public int accountID;
-	public String sumName;
-	public int profIcon;
-	public long revDate;
-	public int sumLvl;
+	private int firstID;
+	private int accountID;
+	private String sumName;
+	private int profIcon;
+	private long revDate;
+	private int sumLvl;
 	
-	public String tier;
-	public int win, losses, lPoint;
-	public String tag, rank;
-	public boolean winStreaks;
+	private String tier;
+	private int win, losses, lPoint;
+	private String tag, rank;
+	private boolean winStreaks;
 
 	/*
 	 * Sample input String
@@ -22,15 +22,19 @@ public class Parse {
 	 * 3186,"revisionDate":1512194457000,"summonerLevel":38}
 	 */
 
-	public String parseLookup(JSONObject input) {
-		varSetUp(input);
-
-		String output = sumName + "\n" + "Level: " + sumLvl + "\n";
-
-		return output;
+	public String getSummonerName() {
+		return sumName;
+	}
+	
+	public int getSummonerLevel() {
+		return sumLvl;
+	}
+	
+	public int getFirstID() {
+		return firstID;
 	}
 
-	public void varSetUp(JSONObject input) {
+	public void parseLookup(JSONObject input) {
 		firstID = input.getInt("id");
 		accountID = input.getInt("accountId");
 		sumName = input.getString("name");
