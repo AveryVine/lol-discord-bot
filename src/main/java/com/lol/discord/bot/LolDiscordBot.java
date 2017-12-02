@@ -56,6 +56,7 @@ public class LolDiscordBot {
 					JSONObject json = new JSONObject(output);
 					parse.parseLookup(json);
 					returnMessage = parse.getSummonerName() + "\n" + parse.getSummonerLevel() + "\n";
+					returnMessage += "\n" + "http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/" + Integer.toString(parse.getprofIcon) + ".png";
 					returnMessage += fetchData("totalMastery", Integer.toString(parse.getFirstID()) + "\n");
 					returnMessage += fetchData("rank", Integer.toString(parse.getFirstID()));
 					if (returnMessage.indexOf(parse.getSummonerName()) != returnMessage

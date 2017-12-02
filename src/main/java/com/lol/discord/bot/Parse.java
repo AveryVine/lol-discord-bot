@@ -33,6 +33,11 @@ public class Parse {
 	public int getFirstID() {
 		return firstID;
 	}
+	
+	public int getprofIcon() {
+		return profIcon;
+	}
+	
 
 	public void parseLookup(JSONObject input) {
 		firstID = input.getInt("id");
