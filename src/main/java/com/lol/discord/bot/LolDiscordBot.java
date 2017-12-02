@@ -11,9 +11,10 @@ import org.json.*;
 
 public class LolDiscordBot {
 
+	final static Fetch fetch = new Fetch();
+	final static Parse parse = new Parse();
+
 	public static void main(String args[]) {
-		final Fetch fetch = new Fetch();
-		final Parse parse = new Parse();
 		String token = "Mzg2NTc2MzM4Mjg4NTA4OTI4.DQR6zA.N74UuXBlgjWApmBFnMRiHITTcnw";
 		// See "How to get the token" below
 		DiscordAPI api = Javacord.getApi(token, true);
@@ -29,37 +30,9 @@ public class LolDiscordBot {
 						if (msg.indexOf(" ") != -1) {
 							String keyword = msg.substring(0, msg.indexOf(" ")).trim();
 							String body = msg.substring(msg.indexOf(" ") + 1, msg.length()).trim();
-							String output = "", returnMessage = "";
-							if ("lookup".equalsIgnoreCase(keyword)) {
-								if (body != null && !"".equals(body)) {
-									output = fetch.retrieveData(keyword, body);
-									// This is all the good stuff
-									if (!"Not found".equals(output) && !"Forbidden".equals(output)
-											&& !"Something went wrong!".equals(output)) {
-										System.out.println(output);
-										JSONObject json = new JSONObject(output);
-										output = json.toString();
-										if ("lookup".equalsIgnoreCase(keyword)) {
-											returnMessage = parse.parseLookup(json);
-										}
-									}
-									// Below this point is error handling
-									else if ("Not found".equals(output)) {
-										if ("lookup".equalsIgnoreCase(keyword))
-											returnMessage = "Invalid summoner name!";
-										else
-											returnMessage = "Something went wrong!";
-									} else if ("Forbidden".equals(output)) {
-										returnMessage = "Access forbidden, contact the developer!";
-									} else if ("Something went wrong!".equals(output)) {
-										returnMessage = output;
-									}
-								} else {
-									if ("lookup".equals(keyword))
-										returnMessage = "Not a valid summoner name!";
-									else
-										returnMessage = "Something went wrong!";
-								}
+							String returnMessage = "";
+							if ("lookup".equalsIgnoreCase(keyword) || "rank".equalsIgnoreCase(keyword)) {
+								returnMessage = fetchData(keyword, body);
 							}
 							// Reply with the message
 							message.reply(returnMessage);
@@ -72,6 +45,40 @@ public class LolDiscordBot {
 				t.printStackTrace();
 			}
 		});
+	}
+
+	public static String fetchData(String keyword, String body) {
+		String output = "", returnMessage = "";
+		if (body != null && !"".equals(body)) {
+			output = fetch.retrieveData(keyword, body);
+			// This is all the good stuff
+			if (!"Not found".equals(output) && !"Forbidden".equals(output) && !"Something went wrong!".equals(output)) {
+				System.out.println(output);
+				JSONObject json = new JSONObject(output);
+				output = json.toString();
+				if ("lookup".equalsIgnoreCase(keyword)) {
+					returnMessage = parse.parseLookup(json);
+					// fetchData("rank", accountId) for example
+				}
+			}
+			// Below this point is error handling
+			else if ("Not found".equals(output)) {
+				if ("lookup".equalsIgnoreCase(keyword))
+					returnMessage = "Invalid summoner name!";
+				else
+					returnMessage = "Something went wrong!";
+			} else if ("Forbidden".equals(output)) {
+				returnMessage = "Access forbidden, contact the developer!";
+			} else if ("Something went wrong!".equals(output)) {
+				returnMessage = output;
+			}
+		} else {
+			if ("lookup".equals(keyword))
+				returnMessage = "Not a valid summoner name!";
+			else
+				returnMessage = "Something went wrong!";
+		}
+		return returnMessage;
 	}
 
 }
