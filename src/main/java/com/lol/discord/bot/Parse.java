@@ -35,7 +35,7 @@ public class Parse {
 		
 		sumName = tempStrings[2];
 		sumName = sumName.substring(7);
-		sumName = sumName.replaceAll("'","");
+		sumName = sumName.replaceAll("\"","");
 		
 		profIcon = tempStrings[3];
 		profIcon = profIcon.substring(15);
@@ -44,7 +44,7 @@ public class Parse {
 		RevDate = RevDate.substring(14);
 		
 		sumlvl = tempStrings[5];
-		sumlvl = sumlvl.substring(15);
+		sumlvl = sumlvl.substring(16);
 		sumlvl = sumlvl.replaceAll("}","");
 		
 	}
