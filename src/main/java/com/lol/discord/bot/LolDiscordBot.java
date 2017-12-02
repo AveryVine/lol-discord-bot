@@ -28,33 +28,32 @@ public class LolDiscordBot {
 							String keyword = msg.substring(0, msg.indexOf(" ")).trim();
 							String body = msg.substring(msg.indexOf(" ") + 1, msg.length()).trim();
 							String output = "", returnMessage = "";
-							if (body == null || "".equals(body)) {
-								if ("lookup".equals(keyword)) {
-									returnMessage = "Not a valid summoner name!";
-								}
-								else {
-									returnMessage = "Something went wrong!";
-								}
-							}
-							else {
+							if (body != null && !"".equals(body)) {
 								output = fetch.retrieveData(keyword, body);
-								if ("Error".equals(output)) {
-									if ("lookup".equalsIgnoreCase(keyword)) {
-										returnMessage = "Invalid summoner name!";
-									}
-									else {
-										returnMessage = "Something went wrong!";
-									}
-								}
-								else if ("Something went wrong!".equals(output)) {
-									returnMessage = output;
-								}
-								else {
+								//This is all the good stuff
+								if (!"Error".equals(output) && !"Something went wrong!".equals(output)) {
 									if ("lookup".equalsIgnoreCase(keyword)) {
 										returnMessage = parse.parseLookup(output);
 									}
 								}
+								//Below this point is error handling
+								else if ("Error".equals(output)) {
+									if ("lookup".equalsIgnoreCase(keyword))
+										returnMessage = "Invalid summoner name!";
+									else
+										returnMessage = "Something went wrong!";
+								}
+								else if ("Something went wrong!".equals(output)) {
+									returnMessage = output;
+								}
 							}
+							else {
+								if ("lookup".equals(keyword))
+									returnMessage = "Not a valid summoner name!";
+								else
+									returnMessage = "Something went wrong!";
+							}
+							//Reply with the message
 							message.reply(returnMessage);
 						}
 					}
