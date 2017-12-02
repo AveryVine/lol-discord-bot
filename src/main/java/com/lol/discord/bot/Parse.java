@@ -13,8 +13,8 @@ public class Parse {
 	
 	private String tier;
 	private int win, losses, lPoint;
+	private float totalWr;
 	private String tag, rank;
-	private boolean winStreaks;
 
 	/*
 	 * Sample input String
@@ -56,10 +56,17 @@ public class Parse {
 			int playerID = player.getInt("playerOrTeamId");
 			if (playerID == firstID) {
 				rank = player.getString("rank");
+				lPoint = player.getInt("leaguePoints");
+				win = player.getInt("wins");
+				losses = player.getInt("losses");
+				totalWr = win / (win + losses) * 100;
 				break;
 			}
 		}
-		return tier + " " + rank;
+		return tier + " " + rank + " " + lPoint + "\n " + " Your total games played is " + (win + losses) + "\n"
+				+ "(" + win + ", " + losses + ", " + String.format("%.2f", totalWr) + ")";
 	}
 	
 }
+
+
