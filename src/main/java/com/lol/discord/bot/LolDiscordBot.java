@@ -29,7 +29,12 @@ public class LolDiscordBot {
 							String body = msg.substring(msg.indexOf(" ") + 1, msg.length()).trim();
 							String output = "", returnMessage = "";
 							if (body == null || "".equals(body)) {
-								output = "Not a valid summoner name!";
+								if ("lookup".equals(keyword)) {
+									returnMessage = "Not a valid summoner name!";
+								}
+								else {
+									returnMessage = "Something went wrong!";
+								}
 							}
 							else {
 								output = fetch.retrieveData(keyword, body);
@@ -49,8 +54,8 @@ public class LolDiscordBot {
 										returnMessage = parse.parseLookup(output);
 									}
 								}
-								message.reply(returnMessage);
 							}
+							message.reply(returnMessage);
 						}
 					}
 				});
