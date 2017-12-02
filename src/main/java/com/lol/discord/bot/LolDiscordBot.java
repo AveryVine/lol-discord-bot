@@ -31,7 +31,7 @@ public class LolDiscordBot {
 							String keyword = msg.substring(0, msg.indexOf(" ")).trim();
 							String body = msg.substring(msg.indexOf(" ") + 1, msg.length()).trim();
 							String returnMessage = "";
-							if ("lookup".equalsIgnoreCase(keyword) || "rank".equalsIgnoreCase(keyword)) {
+							if ("lookup".equalsIgnoreCase(keyword)) {
 								returnMessage = fetchData(keyword, body);
 							}
 							// Reply with the message
@@ -57,7 +57,7 @@ public class LolDiscordBot {
 				JSONObject json = new JSONObject(output);
 				output = json.toString();
 				if ("lookup".equalsIgnoreCase(keyword)) {
-					returnMessage = parse.parseLookup(json);
+					returnMessage += parse.parseLookup(json);
 					// fetchData("rank", accountId) for example
 				}
 			}
