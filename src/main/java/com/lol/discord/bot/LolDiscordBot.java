@@ -56,6 +56,7 @@ public class LolDiscordBot {
 				if ("lookup".equalsIgnoreCase(keyword)) {
 					JSONObject json = new JSONObject(output);
 					returnMessage += parse.parseLookup(json);
+					returnMessage += fetchData("totalMastery",Integer.toString(parse.firstID));
 					returnMessage += fetchData("rank", Integer.toString(parse.firstID));
 				}
 				else if ("rank".equalsIgnoreCase(keyword)) {
@@ -67,6 +68,8 @@ public class LolDiscordBot {
 						JSONObject json = new JSONObject(output);
 						returnMessage += parse.parseRank(json);
 					}
+				}else if ("totalMastery".equalsIgnoreCase(keyword)) {
+					returnMessage += "\n"+ "Total Mastery Level: " + output;
 				}
 			}
 			// Below this point is error handling

@@ -27,6 +27,9 @@ public class Fetch {
 				else if ("rank".equalsIgnoreCase(keyword)) {
 					uri = new URI("https", "na1.api.riotgames.com", "/lol/league/v3/leagues/by-summoner/" + body,
 							"api_key=" + apiKey, null);
+				}else if ("totalMastery".equalsIgnoreCase(keyword)) {
+					uri = new URI("https", "na1.api.riotgames.com", "/lol/champion-mastery/v3/scores/by-summoner/" + body,
+					"api_key=" + apiKey, null);
 				}
 				if (uri != null) {
 					URL url = uri.toURL();
