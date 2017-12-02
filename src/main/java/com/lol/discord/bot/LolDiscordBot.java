@@ -58,7 +58,7 @@ public class LolDiscordBot {
 				output = json.toString();
 				if ("lookup".equalsIgnoreCase(keyword)) {
 					returnMessage += parse.parseLookup(json);
-					// fetchData("rank", accountId) for example
+					returnMessage += fetchData("rank", Integer.toString(parse.accountID));
 				}
 			}
 			// Below this point is error handling
