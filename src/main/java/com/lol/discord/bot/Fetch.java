@@ -27,10 +27,26 @@ public class Fetch {
 				else if ("rank".equalsIgnoreCase(keyword)) {
 					uri = new URI("https", "na1.api.riotgames.com", "/lol/league/v3/leagues/by-summoner/" + body,
 							"api_key=" + apiKey, null);
+				}else if ("totalMastery".equalsIgnoreCase(keyword)) {
+					uri = new URI("https", "na1.api.riotgames.com", "/lol/champion-mastery/v3/scores/by-summoner/" + body,
+					"api_key=" + apiKey, null);
 				}
 				if (uri != null) {
 					URL url = uri.toURL();
 					output = readJsonFromUrl(url);
+					if ("Bad request".equals(output)) {
+						output = retrieveData("lookup", body);
+						if (!"Not found".equals(output) && !"Forbidden".equals(output) && !"Something went wrong!".equals(output)) {
+							JSONObject json = new JSONObject(output);
+							LolDiscordBot.parse.parseLookup(json);
+							output = retrieveData("rank", Integer.toString(LolDiscordBot.parse.getFirstID()));
+						}
+						else if ("Not found".equals(output)) {
+							output = "Invalid summoner name!";
+						} else if ("Forbidden".equals(output)) {
+							output = "Access forbidden, contact the developer!";
+						}
+					}
 				}
 			} catch (Exception e) {
 				output = "Something went wrong!\n" + e.getStackTrace().toString();
@@ -49,6 +65,8 @@ public class Fetch {
 			return "Not found";
 		case 403:
 			return "Forbidden";
+		case 400:
+			return "Bad request";
 		case 200:
 			InputStream is = url.openStream();
 			try {

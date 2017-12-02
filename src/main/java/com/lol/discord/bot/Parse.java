@@ -4,17 +4,17 @@ import org.json.*;
 
 public class Parse {
 
-	public int firstID;
-	public int accountID;
-	public String sumName;
-	public int profIcon;
-	public long revDate;
-	public int sumLvl;
-
-	public String tier;
-	public int rwin, rlosses, lPoint;
-	float totalWr;
-	public String tag, rank;
+	private int firstID;
+	private int accountID;
+	private String sumName;
+	private int profIcon;
+	private long revDate;
+	private int sumLvl;
+	
+	private String tier;
+	private int win, losses, lPoint;
+	private float totalWr;
+	private String tag, rank;
 
 	/*
 	 * Sample input String
@@ -22,15 +22,19 @@ public class Parse {
 	 * 3186,"revisionDate":1512194457000,"summonerLevel":38}
 	 */
 
-	public String parseLookup(JSONObject input) {
-		varSetUp(input);
-
-		String output = sumName + "\n" + "Level: " + sumLvl + "\n";
-
-		return output;
+	public String getSummonerName() {
+		return sumName;
+	}
+	
+	public int getSummonerLevel() {
+		return sumLvl;
+	}
+	
+	public int getFirstID() {
+		return firstID;
 	}
 
-	public void varSetUp(JSONObject input) {
+	public void parseLookup(JSONObject input) {
 		firstID = input.getInt("id");
 		accountID = input.getInt("accountId");
 		sumName = input.getString("name");
@@ -48,15 +52,16 @@ public class Parse {
 			if (playerID == firstID) {
 				rank = player.getString("rank");
 				lPoint = player.getInt("leaguePoints");
-				rwin = player.getInt("wins");
-				rlosses = player.getInt("losses");
-				totalWr = rwin / (rwin + rlosses) * 100;
+				win = player.getInt("wins");
+				losses = player.getInt("losses");
+				totalWr = win / (win + losses) * 100;
 				break;
 			}
 		}
-		return tier + " " + rank + " " + lPoint + "\n " + " Your total game played is (rwin + rlosses)\n"
-				+ "(rwin,rlosses,totaWr.2f)";
+		return tier + " " + rank + " " + lPoint + "\n " + " Your total games played is " + (win + losses) + "\n"
+				+ "(" + win + ", " + losses + ", " + String.format("%.2f", totalWr) + ")";
 	}
+	
 }
 
 

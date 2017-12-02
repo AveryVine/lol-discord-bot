@@ -16,7 +16,6 @@ public class LolDiscordBot {
 
 	public static void main(String args[]) {
 		String token = "Mzg2NTc2MzM4Mjg4NTA4OTI4.DQR6zA.N74UuXBlgjWApmBFnMRiHITTcnw";
-		// See "How to get the token" below
 		DiscordAPI api = Javacord.getApi(token, true);
 		// connect
 		api.connect(new FutureCallback<DiscordAPI>() {
@@ -31,7 +30,7 @@ public class LolDiscordBot {
 							String keyword = msg.substring(0, msg.indexOf(" ")).trim();
 							String body = msg.substring(msg.indexOf(" ") + 1, msg.length()).trim();
 							String returnMessage = "";
-							if ("lookup".equalsIgnoreCase(keyword)) {
+							if ("lookup".equalsIgnoreCase(keyword) || "rank".equalsIgnoreCase(keyword)) {
 								returnMessage = fetchData(keyword, body);
 							}
 							// Reply with the message
@@ -55,18 +54,27 @@ public class LolDiscordBot {
 			if (!"Not found".equals(output) && !"Forbidden".equals(output) && !"Something went wrong!".equals(output)) {
 				if ("lookup".equalsIgnoreCase(keyword)) {
 					JSONObject json = new JSONObject(output);
-					returnMessage += parse.parseLookup(json);
-					returnMessage += fetchData("rank", Integer.toString(parse.firstID));
-				}
-				else if ("rank".equalsIgnoreCase(keyword)) {
-					output = output.substring(1,  output.length() - 1);
+					parse.parseLookup(json);
+					returnMessage = parse.getSummonerName() + "\n" + parse.getSummonerLevel() + "\n";
+					returnMessage += fetchData("totalMastery", Integer.toString(parse.getFirstID()) + "\n");
+					returnMessage += fetchData("rank", Integer.toString(parse.getFirstID()));
+					if (returnMessage.indexOf(parse.getSummonerName()) != returnMessage
+							.lastIndexOf(parse.getSummonerName())) {
+						returnMessage = returnMessage.substring(0, returnMessage.lastIndexOf(parse.getSummonerName()))
+								+ returnMessage.substring(returnMessage.lastIndexOf(parse.getSummonerName())
+										+ parse.getSummonerName().length() + 1, returnMessage.length());
+					}
+				} else if ("rank".equalsIgnoreCase(keyword)) {
+					output = output.substring(1, output.length() - 1);
 					if (output == null || "".equals(output)) {
 						returnMessage += "UNRANKED";
-					}
-					else {
+					} else {
 						JSONObject json = new JSONObject(output);
+						returnMessage = parse.getSummonerName() + "\n";
 						returnMessage += parse.parseRank(json);
 					}
+				} else if ("totalMastery".equalsIgnoreCase(keyword)) {
+					returnMessage += "Total Mastery Level: " + output;
 				}
 			}
 			// Below this point is error handling
