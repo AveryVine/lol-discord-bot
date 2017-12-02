@@ -13,7 +13,7 @@ import de.btobastian.javacord.listener.message.MessageCreateListener;
 public class LolDiscordBot {
 
     public static void main(String args[]) {
-    		String token = "Mzg2NTQ4ODAyNDI2NzY1MzEz.DQRhMA.cO4kOi2x2cPrFMOaxebNp1MgzNg";
+    		String token = "Mzg2NTc2MzM4Mjg4NTA4OTI4.DQR6zA.N74UuXBlgjWApmBFnMRiHITTcnw";
         // See "How to get the token" below
         DiscordAPI api = Javacord.getApi(token, true);
         // connect
@@ -23,9 +23,12 @@ public class LolDiscordBot {
                 api.registerListener(new MessageCreateListener() {
                     public void onMessageCreate(DiscordAPI api, Message message) {
                         // check the content of the message
-                        if (message.getContent().equalsIgnoreCase("ping")) {
+                    		String msg = message.getContent();
+                    		String keyword = msg.substring(0, msg.indexOf(" ")).trim();
+                    		String body = msg.substring(msg.indexOf(" ") + 1, msg.length()).trim();
+                        if (keyword.equalsIgnoreCase("lookup")) {
                             // reply to the message
-                            message.reply("pong");
+                            message.reply("Looking up: " + body);
                         }
                     }
                 });
