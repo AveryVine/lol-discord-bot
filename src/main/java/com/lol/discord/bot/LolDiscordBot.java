@@ -55,7 +55,7 @@ public class LolDiscordBot {
 				if ("lookup".equalsIgnoreCase(keyword)) {
 					JSONObject json = new JSONObject(output);
 					parse.parseLookup(json);
-					returnMessage = parse.getSummonerName() + "\n" + parse.getSummonerLevel() + "\n";
+					returnMessage = "Summoner Name: " + parse.getSummonerName() + "\n (level " + parse.getSummonerLevel() + ")\n";
 					returnMessage += fetchData("totalMastery", Integer.toString(parse.getFirstID()) + "\n");
 					returnMessage += fetchData("rank", Integer.toString(parse.getFirstID()));
 					if (returnMessage.indexOf(parse.getSummonerName()) != returnMessage
