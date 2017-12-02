@@ -56,20 +56,25 @@ public class LolDiscordBot {
 					JSONObject json = new JSONObject(output);
 					parse.parseLookup(json);
 					returnMessage = parse.getSummonerName() + "\n" + parse.getSummonerLevel() + "\n";
+					returnMessage += fetchData("totalMastery", Integer.toString(parse.getFirstID()) + "\n");
 					returnMessage += fetchData("rank", Integer.toString(parse.getFirstID()));
-				}
-				else if ("rank".equalsIgnoreCase(keyword)) {
-					output = output.substring(1,  output.length() - 1);
+					if (returnMessage.indexOf(parse.getSummonerName()) != returnMessage
+							.lastIndexOf(parse.getSummonerName())) {
+						returnMessage = returnMessage.substring(0, returnMessage.lastIndexOf(parse.getSummonerName()))
+								+ returnMessage.substring(returnMessage.lastIndexOf(parse.getSummonerName())
+										+ parse.getSummonerName().length() + 1, returnMessage.length());
+					}
+				} else if ("rank".equalsIgnoreCase(keyword)) {
+					output = output.substring(1, output.length() - 1);
 					if (output == null || "".equals(output)) {
 						returnMessage += "UNRANKED";
-					}
-					else {
+					} else {
 						JSONObject json = new JSONObject(output);
-						if (!returnMessage.contains(parse.getSummonerName())) {
-							returnMessage += parse.getSummonerName() + "\n";
-						}
+						returnMessage = parse.getSummonerName() + "\n";
 						returnMessage += parse.parseRank(json);
 					}
+				} else if ("totalMastery".equalsIgnoreCase(keyword)) {
+					returnMessage += "Total Mastery Level: " + output;
 				}
 			}
 			// Below this point is error handling

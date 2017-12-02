@@ -56,4 +56,5 @@ public class Parse {
 		}
 		return tier + " " + rank;
 	}
+	
 }
