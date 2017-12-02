@@ -9,7 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
-
 import org.json.*;
 
 public class Fetch {
@@ -27,12 +26,7 @@ public class Fetch {
 				}
 				if (uri != null) {
 					URL url = uri.toURL();
-					String jsonText = readJsonFromUrl(url);
-					if (!"Not found".equals(jsonText) || !"Forbidden".equals(jsonText) || !"Something went wrong!".equals(jsonText)) {
-						output = jsonText;
-						// JSONObject json = new JSONObject(jsonText);
-						// output = json.toString();
-					}
+					output = readJsonFromUrl(url);
 				}
 			} catch (Exception e) {
 				output = "Something went wrong!\n" + e.getStackTrace().toString();

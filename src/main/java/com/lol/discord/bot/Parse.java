@@ -1,52 +1,36 @@
 package com.lol.discord.bot;
 
+import org.json.*;
+
 public class Parse {	
 	
-	public String firstid;
-	public String accountID;
+	public int firstID;
+	public int accountID;
 	public String sumName;
-	public String profIcon;
-	public String RevDate;
-	public String sumlvl;
+	public int profIcon;
+	public long revDate;
+	public int sumLvl;
 
 	/*	
  *  Sample input String
 	{"id":41197038,"accountId":202770521,"name":"Ace Damasos","profileIconId":3186,"revisionDate":1512194457000,"summonerLevel":38}
 */	
 	
-	public String parseLookup(String input) {
+	public String parseLookup(JSONObject input) {
 		varSetUp(input);
 		
-		String output = sumName + "\n" + "Level: " + sumlvl;
+		String output = sumName + "\n" + "Level: " + sumLvl;
 		
 		return output;
 	}
 	
-	public void varSetUp(String input) {
-		//split string array length should always be 6 total 
-		String[] tempStrings = input.split(","); //splits input into array of strings at each ,
-		
-		//pretreats each chunk to isolate what we want
-		firstid = tempStrings[0];
-		firstid = firstid.substring(5);
-		
-		accountID = tempStrings[1];
-		accountID = accountID.substring(11);
-		
-		sumName = tempStrings[2];
-		sumName = sumName.substring(7);
-		sumName = sumName.replaceAll("\"","");
-		
-		profIcon = tempStrings[3];
-		profIcon = profIcon.substring(15);
-		
-		RevDate = tempStrings[4];
-		RevDate = RevDate.substring(14);
-		
-		sumlvl = tempStrings[5];
-		sumlvl = sumlvl.substring(16);
-		sumlvl = sumlvl.replaceAll("}","");
-		
+	public void varSetUp(JSONObject input) {
+		firstID = input.getInt("id");
+		accountID = input.getInt("accountId");
+		sumName = input.getString("name");
+		profIcon = input.getInt("profileIconId");
+		revDate = input.getLong("revisionDate");
+		sumLvl = input.getInt("summonerLevel");
 	}
 	
 }
