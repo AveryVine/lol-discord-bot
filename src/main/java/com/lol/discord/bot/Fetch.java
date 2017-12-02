@@ -17,15 +17,14 @@ public class Fetch {
 
 	public String retrieveData(String keyword, String body) {
 		String output = "";
-		if ("lookup".equalsIgnoreCase(keyword)) {
+		if ("lookup".equalsIgnoreCase(keyword) || ("rank".equalsIgnoreCase(keyword))) {
 			URI uri = null;
 			try {
 				if ("lookup".equalsIgnoreCase(keyword)) {
 					uri = new URI("https", "na1.api.riotgames.com", "/lol/summoner/v3/summoners/by-name/" + body,
 							"api_key=" + apiKey, null);
 				}
-				else  if("lookup".equalsIgnoreCase(keyword))
-				{
+				else if ("rank".equalsIgnoreCase(keyword)) {
 					uri = new URI("https", "na1.api.riotgames.com", "/lol/league/v3/leagues/by-summoner/" + body,
 							"api_key=" + apiKey, null);
 				}

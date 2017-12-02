@@ -25,7 +25,7 @@ public class Parse {
 	public String parseLookup(JSONObject input) {
 		varSetUp(input);
 
-		String output = sumName + "\n" + "Level: " + sumLvl;
+		String output = sumName + "\n" + "Level: " + sumLvl + "\n";
 
 		return output;
 	}
@@ -39,7 +39,7 @@ public class Parse {
 		sumLvl = input.getInt("summonerLevel");
 	}
 
-	public String gameStats(JSONObject input) {
+	public String parseRank(JSONObject input) {
 		tier = input.getString("tier");
 		JSONArray arr = input.getJSONArray("entries");
 		for (int i = 0; i < arr.length(); i++) {

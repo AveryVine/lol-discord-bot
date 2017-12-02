@@ -53,12 +53,20 @@ public class LolDiscordBot {
 			output = fetch.retrieveData(keyword, body);
 			// This is all the good stuff
 			if (!"Not found".equals(output) && !"Forbidden".equals(output) && !"Something went wrong!".equals(output)) {
-				System.out.println(output);
-				JSONObject json = new JSONObject(output);
-				output = json.toString();
 				if ("lookup".equalsIgnoreCase(keyword)) {
+					JSONObject json = new JSONObject(output);
 					returnMessage += parse.parseLookup(json);
-					returnMessage += fetchData("rank", Integer.toString(parse.accountID));
+					returnMessage += fetchData("rank", Integer.toString(parse.firstID));
+				}
+				else if ("rank".equalsIgnoreCase(keyword)) {
+					output = output.substring(1,  output.length() - 1);
+					if (output == null || "".equals(output)) {
+						returnMessage += "UNRANKED";
+					}
+					else {
+						JSONObject json = new JSONObject(output);
+						returnMessage += parse.parseRank(json);
+					}
 				}
 			}
 			// Below this point is error handling
