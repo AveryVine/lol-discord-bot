@@ -11,6 +11,7 @@ public class LolDiscordBot {
 
 	public static void main(String args[]) {
 		final Fetch fetch = new Fetch();
+		final Parse parse = new Parse();
 		String token = "Mzg2NTc2MzM4Mjg4NTA4OTI4.DQR6zA.N74UuXBlgjWApmBFnMRiHITTcnw";
 		// See "How to get the token" below
 		DiscordAPI api = Javacord.getApi(token, true);
@@ -26,8 +27,30 @@ public class LolDiscordBot {
 						if (msg.indexOf(" ") != -1) {
 							String keyword = msg.substring(0, msg.indexOf(" ")).trim();
 							String body = msg.substring(msg.indexOf(" ") + 1, msg.length()).trim();
-							String output = fetch.retrieveData(keyword, body);
-							message.reply(output);
+							String output = "", returnMessage = "";
+							if (body == null || "".equals(body)) {
+								output = "Not a valid summoner name!";
+							}
+							else {
+								output = fetch.retrieveData(keyword, body);
+								if ("Error".equals(output)) {
+									if ("lookup".equalsIgnoreCase(keyword)) {
+										returnMessage = "Invalid summoner name!";
+									}
+									else {
+										returnMessage = "Something went wrong!";
+									}
+								}
+								else if ("Something went wrong!".equals(output)) {
+									returnMessage = output;
+								}
+								else {
+									if ("lookup".equalsIgnoreCase(keyword)) {
+										returnMessage = parse.parseLookup(output);
+									}
+								}
+								message.reply(returnMessage);
+							}
 						}
 					}
 				});

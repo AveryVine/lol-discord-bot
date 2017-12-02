@@ -1,6 +1,5 @@
 package com.lol.discord.bot;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,34 +15,31 @@ import org.json.*;
 public class Fetch {
 
 	public final String apiKey = "RGAPI-48dff335-0201-4fd0-9442-9cced6f696b2";
-	private final Parse parse = new Parse();
 
 	public String retrieveData(String keyword, String body) {
-		String message = "";
+		String output = "";
 		if ("lookup".equalsIgnoreCase(keyword)) {
-			message = "";
+			URI uri = null;
 			try {
-				if (body == null || "".equals(body)) {
-					message = "Not a valid summoner name!";
+				if ("lookup".equalsIgnoreCase(keyword)) {
+					uri = new URI("https", "na1.api.riotgames.com", "/lol/summoner/v3/summoners/by-name/" + body,
+							"api_key=" + apiKey, null);
 				}
-				URI uri = new URI("https", "na1.api.riotgames.com", "/lol/summoner/v3/summoners/by-name/" + body,
-						"api_key=" + apiKey, null);
-				URL url = uri.toURL();
-				String jsonText = readJsonFromUrl(url);
-				if ("Error".equals(jsonText)) {
-					message = "Invalid summoner name!";
-				}
-				else {
-					message = jsonText;
-					// JSONObject json = new JSONObject(jsonText);
-					// message = json.toString();
+				if (uri != null) {
+					URL url = uri.toURL();
+					String jsonText = readJsonFromUrl(url);
+					if (!"Error".equals(jsonText) || !"Something went wrong!".equals(jsonText)) {
+						output = jsonText;
+						// JSONObject json = new JSONObject(jsonText);
+						// output = json.toString();
+					}
 				}
 			} catch (Exception e) {
-				message = "Something went wrong!\n" + e.getStackTrace().toString();
+				output = "Something went wrong!\n" + e.getStackTrace().toString();
 			}
 		}
-		System.out.println("Returning message");
-		return message;
+		System.out.println("Returning output: " + output);
+		return output;
 	}
 
 	public String readJsonFromUrl(URL url) throws IOException, JSONException {
