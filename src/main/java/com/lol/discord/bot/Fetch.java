@@ -24,6 +24,11 @@ public class Fetch {
 					uri = new URI("https", "na1.api.riotgames.com", "/lol/summoner/v3/summoners/by-name/" + body,
 							"api_key=" + apiKey, null);
 				}
+				else  if("lookup".equalsIgnoreCase(keyword))
+				{
+					uri = new URI("https", "na1.api.riotgames.com", "/lol/league/v3/leagues/by-summoner/" + body,
+							"api_key=" + apiKey, null);
+				}
 				if (uri != null) {
 					URL url = uri.toURL();
 					output = readJsonFromUrl(url);

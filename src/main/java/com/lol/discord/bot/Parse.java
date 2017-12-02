@@ -11,6 +11,9 @@ public class Parse {
 	public long revDate;
 	public int sumLvl;
 
+	
+	
+
 	/*	
  *  Sample input String
 	{"id":41197038,"accountId":202770521,"name":"Ace Damasos","profileIconId":3186,"revisionDate":1512194457000,"summonerLevel":38}
@@ -31,6 +34,37 @@ public class Parse {
 		profIcon = input.getInt("profileIconId");
 		revDate = input.getLong("revisionDate");
 		sumLvl = input.getInt("summonerLevel");
+	}
+	
+	
+	public String tier;
+	public int win, losses, lPoint;
+	public String tag, rank;
+	public boolean winStreaks;
+	
+	public String gameStats(JSONObject input) 
+	{
+		
+		tier = input.getString("tier");
+		JSONArray arr=input.getJSONArray("entries");
+		for(int i=0;i< arr.length();i++) 
+		{
+			JSONObject player = arr.getJSONObject(i);
+			int playerID = player.getInt("playerOrTeamId");
+			if(playerID == firstID) 
+			{
+				rank = player.getString("rank");
+				break;
+			}
+				
+		}
+		
+		
+		
+		
+		return tier + " " + rank;
+		
+		
 	}
 	
 }
