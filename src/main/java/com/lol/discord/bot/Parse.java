@@ -10,7 +10,7 @@ public class Parse {
 	private int profIcon;
 	private long revDate;
 	private int sumLvl;
-	
+
 	private String tier;
 	private int win, losses, lPoint;
 	private float totalWr;
@@ -25,11 +25,11 @@ public class Parse {
 	public String getSummonerName() {
 		return sumName;
 	}
-	
+
 	public int getSummonerLevel() {
 		return sumLvl;
 	}
-	
+
 	public int getFirstID() {
 		return firstID;
 	}
@@ -58,10 +58,8 @@ public class Parse {
 				break;
 			}
 		}
-		return tier + " " + rank + " " + lPoint + "\n " + " Your total games played is " + (win + losses) + "\n"
-				+ "(" + win + ", " + losses + ", " + String.format("%.2f", totalWr) + ")";
+		return tier + " " + rank + " " + lPoint + "\n " + " Your total games played is " + (win + losses) + "\n" + "("
+				+ win + ", " + losses + ", " + String.format("%.2f", totalWr) + ")";
 	}
-	
+
 }
-
-
