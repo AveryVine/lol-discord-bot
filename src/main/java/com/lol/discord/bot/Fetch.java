@@ -28,7 +28,7 @@ public class Fetch {
 				if (uri != null) {
 					URL url = uri.toURL();
 					String jsonText = readJsonFromUrl(url);
-					if (!"Error".equals(jsonText) || !"Something went wrong!".equals(jsonText)) {
+					if (!"Not found".equals(jsonText) || !"Forbidden".equals(jsonText) || !"Something went wrong!".equals(jsonText)) {
 						output = jsonText;
 						// JSONObject json = new JSONObject(jsonText);
 						// output = json.toString();
@@ -48,7 +48,9 @@ public class Fetch {
 		final int responseCode = connection.getResponseCode();
 		switch (responseCode) {
 		case 404:
-			return "Error";
+			return "Not found";
+		case 403:
+			return "Forbidden";
 		case 200:
 			InputStream is = url.openStream();
 			try {

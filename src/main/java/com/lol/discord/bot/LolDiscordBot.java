@@ -31,17 +31,20 @@ public class LolDiscordBot {
 							if (body != null && !"".equals(body)) {
 								output = fetch.retrieveData(keyword, body);
 								//This is all the good stuff
-								if (!"Error".equals(output) && !"Something went wrong!".equals(output)) {
+								if (!"Not found".equals(output) && !"Forbidden".equals(output) && !"Something went wrong!".equals(output)) {
 									if ("lookup".equalsIgnoreCase(keyword)) {
 										returnMessage = parse.parseLookup(output);
 									}
 								}
 								//Below this point is error handling
-								else if ("Error".equals(output)) {
+								else if ("Not found".equals(output)) {
 									if ("lookup".equalsIgnoreCase(keyword))
 										returnMessage = "Invalid summoner name!";
 									else
 										returnMessage = "Something went wrong!";
+								}
+								else if ("Forbidden".equals(output)) {
+									returnMessage = "Access forbidden, contact the developer!";
 								}
 								else if ("Something went wrong!".equals(output)) {
 									returnMessage = output;
