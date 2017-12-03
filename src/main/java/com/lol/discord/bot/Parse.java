@@ -33,7 +33,7 @@ public class Parse {
 		return firstID;
 	}
 	
-	public int getprofIcon() {
+	public int getProfIcon() {
 		return profIcon;
 	}
 	
@@ -68,7 +68,7 @@ public class Parse {
 
 	
 	public String getVersion(String input) {
-		version = new JSONArray(input).getJSONObject(0).toString();
+		version = new JSONArray(input).getString(0);
 		return version;
 	}
 	

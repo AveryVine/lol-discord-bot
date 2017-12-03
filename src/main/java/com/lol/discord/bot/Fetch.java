@@ -13,11 +13,12 @@ import org.json.*;
 
 public class Fetch {
 
-	public final String apiKey = "RGAPI-48dff335-0201-4fd0-9442-9cced6f696b2";
+	public final String apiKey = "RGAPI-148202d3-e020-4baa-a09a-58e0bb964d98";
 
 	public String retrieveData(String keyword, String body) {
 		String output = "";
-		if ("lookup".equalsIgnoreCase(keyword) || ("rank".equalsIgnoreCase(keyword))) {
+		if ("lookup".equalsIgnoreCase(keyword) || "rank".equalsIgnoreCase(keyword)
+				|| "totalMastery".equalsIgnoreCase(keyword) || "icon".equalsIgnoreCase(keyword)) {
 			URI uri = null;
 			try {
 				if ("lookup".equalsIgnoreCase(keyword)) {
@@ -27,11 +28,11 @@ public class Fetch {
 					uri = new URI("https", "na1.api.riotgames.com", "/lol/league/v3/leagues/by-summoner/" + body,
 							"api_key=" + apiKey, null);
 				} else if ("totalMastery".equalsIgnoreCase(keyword)) {
-					uri = new URI("https", "na1.api.riotgames.com", "/lol/champion-mastery/v3/scores/by-summoner/" + body,
-					"api_key=" + apiKey, null);
+					uri = new URI("https", "na1.api.riotgames.com",
+							"/lol/champion-mastery/v3/scores/by-summoner/" + body, "api_key=" + apiKey, null);
 				} else if ("icon".equalsIgnoreCase(keyword)) {
-					uri = new URI("https", "na1.api.riotgames.com", "/lol/static-data/v3/versions",
-							"api_key=" + apiKey, null);
+					uri = new URI("https", "na1.api.riotgames.com", "/lol/static-data/v3/versions", "api_key=" + apiKey,
+							null);
 				}
 				if (uri != null) {
 					URL url = uri.toURL();

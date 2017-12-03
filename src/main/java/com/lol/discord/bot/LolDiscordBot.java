@@ -58,11 +58,11 @@ public class LolDiscordBot {
 					returnMessage = parse.getSummonerName() + " (level " + parse.getSummonerLevel() + ")\n";
 					returnMessage += "Mastery Score: " + fetchData("totalMastery", Integer.toString(parse.getFirstID()))
 							+ "\n";
-//					returnMessage += fetchData("rank", Integer.toString(parse.getFirstID()));
-					output = fetchData("icon", null);
+					returnMessage += fetchData("rank", Integer.toString(parse.getFirstID()));
+					output = fetchData("icon", "iconBody");
 					returnMessage += "Summoner Icon: " + "http://ddragon.leagueoflegends.com/cdn/"
 							+ parse.getVersion(output) + "/img/profileicon/"
-							+ Integer.toString(parse.getprofIcon()) + ".png";
+							+ Integer.toString(parse.getProfIcon()) + ".png";
 					if (returnMessage.indexOf(parse.getSummonerName()) != returnMessage
 							.lastIndexOf(parse.getSummonerName())) {
 						returnMessage = returnMessage.substring(0, returnMessage.lastIndexOf(parse.getSummonerName()))
@@ -72,13 +72,17 @@ public class LolDiscordBot {
 				} else if ("rank".equalsIgnoreCase(keyword)) {
 					output = output.substring(1, output.length() - 1);
 					if (output == null || "".equals(output)) {
-						returnMessage += "UNRANKED";
+						returnMessage += "UNRANKED\n";
 					} else {
 						JSONObject json = new JSONObject(output);
 						returnMessage = parse.getSummonerName() + "\n";
 						returnMessage += parse.parseRank(json);
 					}
-				} else if ("totalMastery".equalsIgnoreCase(keyword)) {
+				}
+				else if ("totalMastery".equalsIgnoreCase(keyword)) {
+					returnMessage += output;
+				}
+				else if ("icon".equalsIgnoreCase(keyword)) {
 					returnMessage += output;
 				}
 			}
