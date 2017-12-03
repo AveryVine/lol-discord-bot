@@ -10,7 +10,6 @@ public class Parse {
 	private int profIcon;
 	private long revDate;
 	private int sumLvl;
-
 	private String tier, version;
 	private int win, losses, lPoint;
 	private float totalWr;
@@ -59,12 +58,12 @@ public class Parse {
 				lPoint = player.getInt("leaguePoints");
 				win = player.getInt("wins");
 				losses = player.getInt("losses");
-				totalWr = win / (win + losses) * 100;
+				totalWr = ((float)(win)) / (win + losses) * 100;
 				break;
 			}
 		}
-		return tier + " " + rank + " " + lPoint + "\n " + " Your total games played is " + (win + losses) + "\n" + "("
-				+ win + ", " + losses + ", " + String.format("%.2f", totalWr) + ")";
+		return "Rank: " + tier + " " + rank + " (" + lPoint + " lp)\n" + "Win Rate: " + String.format("%.2f", totalWr)
+				+ "% (" + win + " wins, " + losses + " losses)\n";
 	}
 
 	
