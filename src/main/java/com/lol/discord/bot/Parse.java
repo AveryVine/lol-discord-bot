@@ -10,7 +10,7 @@ public class Parse {
 	private int profIcon;
 	private long revDate;
 	private int sumLvl;
-	private String tier;
+	private String tier, version;
 	private int win, losses, lPoint;
 	private float totalWr;
 	private String tag, rank;
@@ -66,4 +66,10 @@ public class Parse {
 				+ "% (" + win + " wins, " + losses + " losses)\n";
 	}
 
+	
+	public String getVersion(JSONArray input) {
+		version = input.getJSONObject(0).toString();
+		return version;
+	}
+	
 }
