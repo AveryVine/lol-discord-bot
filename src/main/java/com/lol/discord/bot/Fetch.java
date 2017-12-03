@@ -17,7 +17,7 @@ public class Fetch {
 
 	public String retrieveData(String keyword, String body) {
 		String output = "";
-		if ("lookup".equalsIgnoreCase(keyword) || ("rank".equalsIgnoreCase(keyword) || "totalMastery".equalsIgnoreCase(keyword))) {
+		if ("lookup".equalsIgnoreCase(keyword) || ("rank".equalsIgnoreCase(keyword))) {
 			URI uri = null;
 			try {
 				if ("lookup".equalsIgnoreCase(keyword)) {
@@ -26,10 +26,19 @@ public class Fetch {
 				} else if ("rank".equalsIgnoreCase(keyword)) {
 					uri = new URI("https", "na1.api.riotgames.com", "/lol/league/v3/leagues/by-summoner/" + body,
 							"api_key=" + apiKey, null);
+<<<<<<< HEAD
+				}else if ("totalMastery".equalsIgnoreCase(keyword)) {
+					uri = new URI("https", "na1.api.riotgames.com", "/lol/champion-mastery/v3/scores/by-summoner/" + body,
+					"api_key=" + apiKey, null);
+				}else if ("icon".equalsIgnoreCase(keyword)) {
+					uri = new URI("https", "na1.api.riotgames.com", "/lol/static-data/v3/versions",
+							"api_key=" + apiKey, null);
+=======
 				} else if ("totalMastery".equalsIgnoreCase(keyword)) {
 					System.out.println("Body: " + body);
 					uri = new URI("https", "na1.api.riotgames.com",
 							"/lol/champion-mastery/v3/scores/by-summoner/" + body, "api_key=" + apiKey, null);
+>>>>>>> e13e964d77c25b5260feeacdab384c1be4b97d03
 				}
 				if (uri != null) {
 					URL url = uri.toURL();
