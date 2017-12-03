@@ -67,8 +67,8 @@ public class Parse {
 	}
 
 	
-	public String getVersion(JSONArray input) {
-		version = input.getJSONObject(0).toString();
+	public String getVersion(String input) {
+		version = new JSONArray(input).getJSONObject(0).toString();
 		return version;
 	}
 	

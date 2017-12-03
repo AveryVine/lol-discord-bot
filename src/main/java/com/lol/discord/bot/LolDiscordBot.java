@@ -58,9 +58,10 @@ public class LolDiscordBot {
 					returnMessage = parse.getSummonerName() + " (level " + parse.getSummonerLevel() + ")\n";
 					returnMessage += "Mastery Score: " + fetchData("totalMastery", Integer.toString(parse.getFirstID()))
 							+ "\n";
-					returnMessage += fetchData("rank", Integer.toString(parse.getFirstID()));
-					returnMessage += "\n" + "http://ddragon.leagueoflegends.com/cdn/"
-							+ parse.getVersion(new JSONArray(output)) + "/img/profileicon/"
+//					returnMessage += fetchData("rank", Integer.toString(parse.getFirstID()));
+					output = fetchData("icon", null);
+					returnMessage += "Summoner Icon: " + "http://ddragon.leagueoflegends.com/cdn/"
+							+ parse.getVersion(output) + "/img/profileicon/"
 							+ Integer.toString(parse.getprofIcon()) + ".png";
 					if (returnMessage.indexOf(parse.getSummonerName()) != returnMessage
 							.lastIndexOf(parse.getSummonerName())) {
