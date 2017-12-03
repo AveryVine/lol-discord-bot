@@ -17,31 +17,31 @@ public class Fetch {
 
 	public String retrieveData(String keyword, String body) {
 		String output = "";
-		if ("lookup".equalsIgnoreCase(keyword) || ("rank".equalsIgnoreCase(keyword))) {
+		if ("lookup".equalsIgnoreCase(keyword) || ("rank".equalsIgnoreCase(keyword) || "totalMastery".equalsIgnoreCase(keyword))) {
 			URI uri = null;
 			try {
 				if ("lookup".equalsIgnoreCase(keyword)) {
 					uri = new URI("https", "na1.api.riotgames.com", "/lol/summoner/v3/summoners/by-name/" + body,
 							"api_key=" + apiKey, null);
-				}
-				else if ("rank".equalsIgnoreCase(keyword)) {
+				} else if ("rank".equalsIgnoreCase(keyword)) {
 					uri = new URI("https", "na1.api.riotgames.com", "/lol/league/v3/leagues/by-summoner/" + body,
 							"api_key=" + apiKey, null);
-				}else if ("totalMastery".equalsIgnoreCase(keyword)) {
-					uri = new URI("https", "na1.api.riotgames.com", "/lol/champion-mastery/v3/scores/by-summoner/" + body,
-					"api_key=" + apiKey, null);
+				} else if ("totalMastery".equalsIgnoreCase(keyword)) {
+					System.out.println("Body: " + body);
+					uri = new URI("https", "na1.api.riotgames.com",
+							"/lol/champion-mastery/v3/scores/by-summoner/" + body, "api_key=" + apiKey, null);
 				}
 				if (uri != null) {
 					URL url = uri.toURL();
 					output = readJsonFromUrl(url);
 					if ("Bad request".equals(output)) {
 						output = retrieveData("lookup", body);
-						if (!"Not found".equals(output) && !"Forbidden".equals(output) && !"Something went wrong!".equals(output)) {
+						if (!"Not found".equals(output) && !"Forbidden".equals(output)
+								&& !"Something went wrong!".equals(output)) {
 							JSONObject json = new JSONObject(output);
 							LolDiscordBot.parse.parseLookup(json);
 							output = retrieveData("rank", Integer.toString(LolDiscordBot.parse.getFirstID()));
-						}
-						else if ("Not found".equals(output)) {
+						} else if ("Not found".equals(output)) {
 							output = "Invalid summoner name!";
 						} else if ("Forbidden".equals(output)) {
 							output = "Access forbidden, contact the developer!";
@@ -80,7 +80,7 @@ public class Fetch {
 			}
 		}
 		return "Something went wrong!";
-		
+
 	}
 
 	private static String readAll(Reader rd) throws IOException {

@@ -10,7 +10,6 @@ public class Parse {
 	private int profIcon;
 	private long revDate;
 	private int sumLvl;
-
 	private String tier;
 	private int win, losses, lPoint;
 	private float totalWr;
@@ -33,6 +32,11 @@ public class Parse {
 	public int getFirstID() {
 		return firstID;
 	}
+	
+	public int getprofIcon() {
+		return profIcon;
+	}
+	
 
 	public void parseLookup(JSONObject input) {
 		firstID = input.getInt("id");
@@ -54,12 +58,12 @@ public class Parse {
 				lPoint = player.getInt("leaguePoints");
 				win = player.getInt("wins");
 				losses = player.getInt("losses");
-				totalWr = win / (win + losses) * 100;
+				totalWr = ((float)(win)) / (win + losses) * 100;
 				break;
 			}
 		}
 		return "Rank: " + tier + " " + rank + " (" + lPoint + " lp)\n" + "Win Rate: " + String.format("%.2f", totalWr)
-				+ " (" + win + " wins, " + losses + " losses)\n";
+				+ "% (" + win + " wins, " + losses + " losses)\n";
 	}
 
 }
